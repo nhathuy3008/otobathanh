@@ -1,5 +1,6 @@
 package api.otobathanh.Model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -7,6 +8,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -55,6 +57,10 @@ public class Order {
     public enum Status {
         PENDING, PROCESSING, COMPLETED, CANCELLED
     }
+    @JsonManagedReference // Đánh dấu cho phía "một"
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderDetail> orderDetails;
+
 
 }
 
